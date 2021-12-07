@@ -10,32 +10,25 @@ import {
   View,
 } from 'react-native';
 import {connect} from 'react-redux'
-import Icon from 'react-native-vector-icons/Ionicons';
-import AntIcon from 'react-native-vector-icons/Entypo';
-
+import DrawerContent from './DrawerContent'
+import { createDrawerNavigator } from '@react-navigation/drawer';
+import { NavigationContainer } from '@react-navigation/native';
+ import Screen1 from './Screen.js'
+ import Screen2 from './Screen2.js'
 function Home(props){
-    const [isSet, setValue ] = useState(false);
+    const Drawer  = createDrawerNavigator()
     return(
-        <View style={{justifyContent:'center',alignItems: 'center',flexDirection:'row',flex:1}}>
-            <TouchableOpacity onPress={()=>props.increaseCounter()}>
-                <Icon name="add-circle" size={30} color="white" />
-            </TouchableOpacity>
-            <Text style={{marginLeft:50,marginRight:50,fontSize:20}}>{props.counter}</Text>
-            <TouchableOpacity onPress={()=>props.decreaseCounter()}>
-                <AntIcon name="circle-with-minus" size={30} color='white'/>
-            </TouchableOpacity>
-            <TouchableOpacity onPress={()=>{
-                    isSet ? props.setText("Hello") : props.setText("Bye")
-                    setValue((value)=>{
-                        value = !value
-                        return value;
-                    })
-                }}>
-                <Text>{props.text}asdasdasd</Text>
-            </TouchableOpacity>
-        </View>
+        <NavigationContainer>
+            <Drawer.Navigator drawerContent={props => <DrawerContent {...props} />}>
+                <Drawer.Screen name="Screen1" component={Screen1} />
+                <Drawer.Screen name="Screen2" component={Screen2} />
+            </Drawer.Navigator>
+        </NavigationContainer>
     )
 }
+
+
+
 
 function mapStateToProps(state){
     return{
@@ -53,4 +46,6 @@ function mapDispatchToProps(dispatch){
 }
 
 export default connect(mapStateToProps,mapDispatchToProps)(Home)
+
+
 
